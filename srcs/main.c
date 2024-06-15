@@ -85,7 +85,7 @@ void	fdf_init(t_vars *data)
 	data->img.img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	if (data->img.img == NULL)
 		exit ((mlx_destroy_window(data->mlx, data->win),
-			mlx_destroy_display(data->mlx), free(data->mlx), 1));
+				mlx_destroy_display(data->mlx), free(data->mlx), 1));
 	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bits_per_pixel,
 			&data->img.line_length, &data->img.endian);
 	data->rot_x = 50;

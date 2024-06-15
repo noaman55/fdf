@@ -29,36 +29,36 @@ int	point_color(int color1, int color2, int x1, int x2, int x)
 	return (color);
 }
 
-void	draw_line(t_point point1, t_point point2, t_data *img)
-{
-	int		i;
-	int		dx;
-	int		dy;
-	int		steps;
-	float	xinc;
-	float	yinc;
-	float	x;
-	float	y;
+// void	draw_line(t_point point1, t_point point2, t_data *img)
+// {
+// 	int		i;
+// 	int		dx;
+// 	int		dy;
+// 	int		steps;
+// 	float	xinc;
+// 	float	yinc;
+// 	float	x;
+// 	float	y;
 
-	dx = point2.x - point1.x;
-	dy = point2.y - point1.y;
-	if (abs(dx) > abs(dy))
-		steps = abs(dx);
-	else
-		steps = abs(dy);
-	xinc = dx / (float) steps;
-	yinc = dy / (float) steps;
-	x = point1.x;
-	y = point1.y;
-	my_mlx_pixel_put(img, x, y, point1.color);
-	i = 0;
-	while (i < steps)
-	{
-		x += xinc;
-		y += yinc;
-		my_mlx_pixel_put(img, x, y, point_color(point1.color, point2.color, 0, steps, i++));
-	}
-}
+// 	dx = point2.x - point1.x;
+// 	dy = point2.y - point1.y;
+// 	if (abs(dx) > abs(dy))
+// 		steps = abs(dx);
+// 	else
+// 		steps = abs(dy);
+// 	xinc = dx / (float) steps;
+// 	yinc = dy / (float) steps;
+// 	x = point1.x;
+// 	y = point1.y;
+// 	my_mlx_pixel_put(img, x, y, point1.color);
+// 	i = 0;
+// 	while (i < steps)
+// 	{
+// 		x += xinc;
+// 		y += yinc;
+// 		my_mlx_pixel_put(img, x, y, point_color(point1.color, point2.color, 0, steps, i++));
+// 	}
+// }
 
 void	print_model(t_vars *data)
 {
@@ -129,58 +129,87 @@ void	print_model(t_vars *data)
 //     }
 // }
 
-// void	draw_line(t_point point1, t_point point2, t_data *img)
-// {
-// 	int	dx;
-// 	int	dy;
-// 	int	sx;
-// 	int	sy;
-// 	int	err;
-// 	int	x;
-// 	int	y;
+void	draw_line(t_point point1, t_point point2, t_data *img)
+{
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	err;
+	int	x;
+	int	y;
 
-// 	dx = abs(point1.x - point2.x);
-// 	dy = abs(point1.y - point2.y);
-// 	if (point1.x > point2.x)
-// 		sx = -1;
-// 	else
-// 		sx = 1;
-// 	if (point1.y > point2.y)
-// 		sy = -1;
-// 	else
-// 		sy = 1;
-// 	if (dx > dy)
-// 	{
-// 		x= point1.x;
-// 		err = dx / 2;
-// 		while (point1.x != point2.x)
-// 		{
-// 			// my_mlx_pixel_put(img, point1.x, point1.y, point1.color);
-// 			my_mlx_pixel_put(img, point1.x, point1.y, point_color(point1.color, point2.color, x, point2.x, point1.x));
-// 			err -= dy;
-// 			if (err < 0)
-// 			{
-// 				point1.y += sy;
-// 				err += dx;
-// 			}
-// 			point1.x += sx;
-// 		}
-// 	}
-// 	else
-// 	{
-// 		y = point1.y;
-// 		err = dy / 2;
-// 		while (point1.y != point2.y)
-// 		{
-// 			// my_mlx_pixel_put(img, point1.x, point1.y, point2.color);
-// 			my_mlx_pixel_put(img, point1.x, point1.y, point_color(point1.color, point2.color, y, point2.y, point1.y));
-// 			err -= dx;
-// 			if (err < 0)
-// 			{
-// 				point1.x += sx;
-// 				err += dy;
-// 			}
-// 			point1.y += sy;
-// 		}
-// 	}
-// }
+	dx = abs(point1.x - point2.x);
+	dy = abs(point1.y - point2.y);
+	if (point1.x > point2.x)
+		sx = -1;
+	else
+		sx = 1;
+	if (point1.y > point2.y)
+		sy = -1;
+	else
+		sy = 1;
+	if (dx > dy)
+	{
+		x= point1.x;
+		err = dx / 2;
+		while (point1.x != point2.x)
+		{
+			// my_mlx_pixel_put(img, point1.x, point1.y, point1.color);
+			my_mlx_pixel_put(img, point1.x, point1.y, point_color(point1.color, point2.color, x, point2.x, point1.x));
+			err -= dy;
+			if (err < 0)
+			{
+				point1.y += sy;
+				err += dx;
+			}
+			point1.x += sx;
+		}
+	}
+	else
+	{
+		y = point1.y;
+		err = dy / 2;
+		while (point1.y != point2.y)
+		{
+			// my_mlx_pixel_put(img, point1.x, point1.y, point2.color);
+			my_mlx_pixel_put(img, point1.x, point1.y, point_color(point1.color, point2.color, y, point2.y, point1.y));
+			err -= dx;
+			if (err < 0)
+			{
+				point1.x += sx;
+				err += dy;
+			}
+			point1.y += sy;
+		}
+	}
+}
+
+void bresenham_line(int x0, int y0, int x1, int y1) {
+    int dx;
+    int dy;
+    int sx;
+    int sy;
+    int err;
+    int e2;
+
+	dx = abs(x1 - x0);
+    dy = abs(y1 - y0);
+    sx = x0 < x1 ? 1 : -1;
+    sy = y0 < y1 ? 1 : -1;
+    err = dx - dy;
+    while (1) {
+        printf("(%d, %d)\n", x0, y0);
+        if (x0 == x1 && y0 == y1)
+            break;
+        e2 = err * 2;
+        if (e2 > -dy) {
+            err -= dy;
+            x0 += sx;
+        }
+        if (e2 < dx) {
+            err += dx;
+            y0 += sy;
+        }
+    }
+}

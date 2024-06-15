@@ -77,8 +77,15 @@ void	print_manual(t_vars *data)
 void	fdf_init(t_vars *data)
 {
 	data->mlx = mlx_init();
+	if (data->mlx == NULL)
+		exit (1);
 	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "FDF");
+	if (data->win == NULL)
+		exit ((mlx_destroy_display(data->mlx), free(data->mlx), 1));
 	data->img.img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	if (data->img.img == NULL)
+		exit ((mlx_destroy_window(data->mlx, data->win),
+			mlx_destroy_display(data->mlx), free(data->mlx), 1));
 	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bits_per_pixel,
 			&data->img.line_length, &data->img.endian);
 	data->rot_x = 50;
@@ -98,8 +105,8 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (0);
-	read_map(argv[1], &data);
 	fdf_init(&data);
+	read_map(argv[1], &data);
 	calcul_spaces(&data);
 	map_homothety(&data);
 	color_range(&data);

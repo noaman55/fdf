@@ -19,6 +19,8 @@ void	close_win(int keycode, t_vars *data)
 	{
 		mlx_destroy_image(data->mlx, data->img.img);
 		mlx_destroy_window(data->mlx, data->win);
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
 		free_tab((void **)data->map);
 		exit(0);
 	}
@@ -28,6 +30,8 @@ int	close_win_mouse(t_vars *data)
 {
 	mlx_destroy_image(data->mlx, data->img.img);
 	mlx_destroy_window(data->mlx, data->win);
+	mlx_destroy_display(data->mlx);
+	free(data->mlx);
 	free_tab((void **)data -> map);
 	exit(0);
 	return (0);

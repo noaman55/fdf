@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noudrib <noudrib@student.42.fr>            +#+  +:+       +#+        */
+/*   By: forrest <forrest@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 22:05:28 by noudrib           #+#    #+#             */
-/*   Updated: 2024/05/16 22:50:17 by noudrib          ###   ########.fr       */
+/*   Updated: 2024/06/16 19:09:07 by forrest          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	color_rgb(int color, t_point *p, t_vars *data)
 	if (data->alt_max == data->alt_min)
 		per = 0.5;
 	else
-		per = (float)abs(p->z - data->alt_min)
-			/ (float)abs(data->alt_max - data->alt_min);
+		per = (float)ft_abs(p->z - data->alt_min)
+			/ (float)ft_abs(data->alt_max - data->alt_min);
 	red = (1 - per) * get_r(color) + (per) * get_r(0xFFFFFF);
 	gr = (1 - per) * get_g(color) + (per) * get_g(0xFFFFFF);
 	bl = (1 - per) * get_b(color) + (per) * get_b(0xFFFFFF);

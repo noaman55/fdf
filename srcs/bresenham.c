@@ -3,17 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   bresenham.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noudrib <noudrib@student.42.fr>            +#+  +:+       +#+        */
+/*   By: forrest <forrest@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 15:01:57 by noudrib           #+#    #+#             */
-/*   Updated: 2024/05/16 21:08:32 by noudrib          ###   ########.fr       */
+/*   Updated: 2024/06/16 19:08:09 by forrest          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "fdf.h"
 
-int	point_color(int color1, int color2, int x1, int x2, int x)
+// int	point_color(int color1, int color2, int x1, int x2, int x)
+// {
+// 	int		color;
+// 	int		red;
+// 	int		gr;
+// 	int		bl;
+// 	float	per;
+
+// 	per = (float)abs(x - x1) / (float)abs(x1 - x2);
+// 	red = (1 - per) * get_r(color1) + (per) * get_r(color2);
+// 	gr = (1 - per) * get_g(color1) + (per) * get_g(color2);
+// 	bl = (1 - per) * get_b(color1) + (per) * get_b(color2);
+// 	color = create_trgb(0, red, gr, bl);
+// 	return (color);
+// }
+
+int	ft_abs(int n)
+{
+	if (n >= 0)
+		return (n);
+	return (-n);
+}
+
+int	point_color(int color1, int color2, int x2, int x)
 {
 	int		color;
 	int		red;
@@ -21,7 +44,7 @@ int	point_color(int color1, int color2, int x1, int x2, int x)
 	int		bl;
 	float	per;
 
-	per = (float)abs(x - x1) / (float)abs(x1 - x2);
+	per = (float)ft_abs(x - 0) / (float)ft_abs(0 - x2);
 	red = (1 - per) * get_r(color1) + (per) * get_r(color2);
 	gr = (1 - per) * get_g(color1) + (per) * get_g(color2);
 	bl = (1 - per) * get_b(color1) + (per) * get_b(color2);
@@ -31,35 +54,62 @@ int	point_color(int color1, int color2, int x1, int x2, int x)
 
 void	draw_line(t_point point1, t_point point2, t_data *img)
 {
+	t_dda	var;
 	int		i;
-	int		dx;
-	int		dy;
-	int		steps;
-	float	xinc;
-	float	yinc;
 	float	x;
 	float	y;
 
-	dx = point2.x - point1.x;
-	dy = point2.y - point1.y;
-	if (abs(dx) > abs(dy))
-		steps = abs(dx);
-	else
-		steps = abs(dy);
-	xinc = dx / (float) steps;
-	yinc = dy / (float) steps;
+	var.dx = point2.x - point1.x;
+	var.dy = point2.y - point1.y;
+	var.steps = ft_abs(var.dy);
+	if (ft_abs(var.dx) > ft_abs(var.dy))
+		var.steps = ft_abs(var.dx);
+	var.xinc = var.dx / (float) var.steps;
+	var.yinc = var.dy / (float) var.steps;
 	x = point1.x;
 	y = point1.y;
-	my_mlx_pixel_put(img, x, y, point1.color);
+	my_mlx_pixel_put(img, point1.x, point1.y, point1.color);
 	i = 0;
-	while (i < steps)
+	while (i < var.steps)
 	{
-		x += xinc;
-		y += yinc;
+		x += var.xinc;
+		y += var.yinc;
 		my_mlx_pixel_put(img, x, y, point_color(point1.color,
-				point2.color, 0, steps, i++));
+				point2.color, var.steps, i++));
 	}
 }
+
+// void	draw_line(t_point point1, t_point point2, t_data *img)
+// {
+// 	int		i;
+// 	int		dx;
+// 	int		dy;
+// 	int		steps;
+// 	float	xinc;
+// 	float	yinc;
+// 	float	x;
+// 	float	y;
+
+// 	dx = point2.x - point1.x;
+// 	dy = point2.y - point1.y;
+// 	if (abs(dx) > abs(dy))
+// 		steps = abs(dx);
+// 	else
+// 		steps = abs(dy);
+// 	xinc = dx / (float) steps;
+// 	yinc = dy / (float) steps;
+// 	x = point1.x;
+// 	y = point1.y;
+// 	my_mlx_pixel_put(img, x, y, point1.color);
+// 	i = 0;
+// 	while (i < steps)
+// 	{
+// 		x += xinc;
+// 		y += yinc;
+// 		my_mlx_pixel_put(img, x, y, point_color(point1.color,
+// 			point2.color, 0, steps, i++));
+// 	}
+// }
 
 void	print_model(t_vars *data)
 {

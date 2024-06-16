@@ -6,7 +6,7 @@
 /*   By: forrest <forrest@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 16:01:23 by noudrib           #+#    #+#             */
-/*   Updated: 2024/06/05 00:04:58 by forrest          ###   ########.fr       */
+/*   Updated: 2024/06/16 18:52:10 by forrest          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,18 @@ typedef struct s_vars
 	int		alt_max;
 	int		switch_color;
 }				t_vars;
+
+typedef struct s_dda
+{
+	int		i;
+	int		dx;
+	int		dy;
+	int		steps;
+	float	xinc;
+	float	yinc;
+	float	x;
+	float	y;
+}				t_dda;
 
 //t_point	**read_map(char *path, t_vars *data);
 int		array_size(char **arr);
